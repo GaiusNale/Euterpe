@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from decouple import config
-import os
 
 # Load Genius API token
 ACCESS_TOKEN = config("ACCESS_TOKEN", default=None)
@@ -66,20 +65,25 @@ def fetch_lyrics(song_url):
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         
-        # Find the lyrics section
+        # Try different containers for lyrics
         lyrics_div = soup.find("div", class_="lyrics")  # Old Genius layout
         if not lyrics_div:
             # For the newer Genius layout
-            lyrics_div = soup.find("div", {"data-lyrics-container": "true"})
-        
-        if lyrics_div:
-            return lyrics_div.get_text(separator="\n").strip()
+            lyrics_divs = soup.find_all("div", {"data-lyrics-container": "true"})
+            if lyrics_divs:
+                # Combine all parts of the lyrics
+                lyrics = "\n".join(div.get_text(separator="\n").strip() for div in lyrics_divs)
+                return lyrics
         else:
-            print(f"Lyrics not found on page: {song_url}")
-            return None
+            # Old layout single container
+            return lyrics_div.get_text(separator="\n").strip()
+        
+        print(f"Lyrics not found on page: {song_url}")
+        return None
     else:
         print(f"Error fetching lyrics: {response.status_code} - {response.text}")
         return None
+    
 
 def save_lyrics(artist_name, songs_with_lyrics, output_file="all_lyrics.txt"):
     """
@@ -105,7 +109,7 @@ artist_name = "Kendrick Lamar"
 artist_id = get_artist_id(artist_name)
 if artist_id:
     print(f"Fetching songs for artist ID: {artist_id}")
-    songs = fetch_artist_songs(artist_id, max_songs=100)  # Adjust max_songs as needed
+    songs = fetch_artist_songs(artist_id, max_songs=5)  # Adjust max_songs as needed
     print(f"Found {len(songs)} songs by {artist_name}.")
     
     all_lyrics = []
@@ -115,7 +119,6 @@ if artist_id:
         if lyrics:
             all_lyrics.append((title, lyrics))
     
-    # Save all lyrics to a single file
     save_lyrics(artist_name, all_lyrics, output_file=f"{artist_name.replace(' ', '_')}_lyrics.txt")
 else:
     print("Artist not found.")
