@@ -1,4 +1,4 @@
-# Word Frequency Analyzer
+# Word Frequency Analyzer (Euterpe)
 
 ## Overview
 This project is a Python-based tool designed to analyze the frequency of specific words or phrases in a collection of song lyrics. Originally inspired by a fixation on 21 Savage’s iconic adlibs, it can be adapted for any artist or text dataset.
@@ -42,7 +42,7 @@ python3 counter.py
 ---
 
 ## Why This Project?
-This started as a fun way to explore 21 Savage’s lyrical tendencies but quickly evolved into a general-purpose word analysis tool. Whether you’re curious about adlibs, themes, or repetition in any artist’s lyrics, this tool has you covered.
+This started as a fun way to explore 21 Savage’s lyrical tendencies but quickly evolved into a general-purpose word analysis tool. Whether you’re curious about adlibs, themes, or repetition in any artist’s lyrics,wall of text or even movie scripts this tool has you covered.
 
 ---
 
