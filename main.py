@@ -26,7 +26,7 @@ def get_artist_id(artist_name):
         print(f"Error: {response.status_code} - {response.text}")
     return None
 
-def fetch_artist_songs(artist_id, max_songs=100):
+def fetch_artist_songs(artist_id, max_songs=1000):
     """
     Fetch all songs for a given artist using the Genius API artist ID.
     """
@@ -105,11 +105,11 @@ def save_lyrics(artist_name, songs_with_lyrics, output_file="all_lyrics.txt"):
     print(f"All lyrics saved to: {output_file}")
 
 # Example usage
-artist_name = "Kendrick Lamar"
+artist_name = "21 savage"
 artist_id = get_artist_id(artist_name)
 if artist_id:
     print(f"Fetching songs for artist ID: {artist_id}")
-    songs = fetch_artist_songs(artist_id, max_songs=5)  # Adjust max_songs as needed
+    songs = fetch_artist_songs(artist_id, max_songs=700)  # Adjust max_songs as needed
     print(f"Found {len(songs)} songs by {artist_name}.")
     
     all_lyrics = []
