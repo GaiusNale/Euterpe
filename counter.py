@@ -91,7 +91,7 @@ def word_frequency(lyrics_file, word):
 
 if __name__ == "__main__":
     # Update this to match your lyrics file
-    lyrics_file = "21_savage_lyrics.txt"
+    lyrics_file = ""
     # Word or phrase to search for
-    search_word = "nigga"
+    search_word = ""
     word_frequency(lyrics_file, search_word)
